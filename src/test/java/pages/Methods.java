@@ -47,11 +47,10 @@ public class Methods {
         driver.findElement(webElement).sendKeys(keyboard);
     }
 
-    public void waitForUrlToContain(String text) {
-        wait.until(ExpectedConditions.urlContains(text));
+    public void waitForUrlToContain(String partialUrl) {
+        wait.until(ExpectedConditions.urlContains(partialUrl));
     }
 
-    // Sayfa işlem metotları
     public void openCompanyPage() {
         waitForElementDisplayed(Elements.companyPage);
         click(Elements.companyPage);
@@ -71,12 +70,12 @@ public class Methods {
         click(Elements.seeAllQAJobsBtn);
     }
 
-    public void selectLocation(String location) throws InterruptedException {
+    public void selectLocation(String location) {
         waitForElementDisplayed(Elements.locationDropdown);
         click(Elements.locationDropdown);
         waitForElementToBeClickable(Elements.locationSelect);
         waitForElementToBeClickable(Elements.locationSelectOption);
-        Thread.sleep(10000);
+        waitForElementToBeClickable(Elements.filteredByQADepartment);
         select(Elements.locationSelect, location);
     }
 }

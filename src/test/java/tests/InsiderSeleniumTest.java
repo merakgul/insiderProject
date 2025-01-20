@@ -22,10 +22,11 @@ public class InsiderSeleniumTest extends BaseTest {
     }
 
     @Test
-    public void shouldSeeQualityAssurancePositions() throws InterruptedException {
+    public void shouldSeeQualityAssurancePositions() {
         driver.get("https://useinsider.com/careers/quality-assurance/");
         methods.openSeeAllQAJobs();
         methods.selectLocation("Istanbul, Turkey");
+        methods.waitForElementDisplayed(Elements.jobsListItem);
 
         List<WebElement> jobList = driver.findElements(Elements.jobsList);
         assert jobList.size() > 0 : "İş ilanları bulunamadı!";
@@ -41,11 +42,12 @@ public class InsiderSeleniumTest extends BaseTest {
         }
 
         WebElement viewRoleButton = jobList.get(0).findElement(Elements.viewRoleBtn);
+        methods.hoverElement(viewRoleButton);
         methods.waitForElementToBeClickable(Elements.viewRoleBtn);
         viewRoleButton.click();
 
         methods.waitForUrlToContain("lever.co");
         String currentUrl = driver.getCurrentUrl();
-        assert currentUrl.contains("lever.co") : "Redirect did not go to the Lever Application form page";
+        assert currentUrl.contains("lever.co") : "Redirect did not go to the Lever Application form page. Current URL is: " + currentUrl;
     }
 }

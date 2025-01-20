@@ -8,15 +8,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import pages.Elements;
 import pages.Methods;
 
 public class BaseTest {
 
     protected WebDriver driver;
     protected Methods methods;
-    public Elements elements = new Elements();
-
 
     @BeforeEach
     public void setUp() {
