@@ -1,7 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -13,12 +13,12 @@ import java.time.Duration;
 
 public class Methods {
 
-    private WebDriver driver;
-    private WebDriverWait wait;
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public Methods(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20L));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30L));
     }
 
     public void waitForElementDisplayed(By webElement) {
@@ -30,21 +30,17 @@ public class Methods {
     }
 
     public void click(By webElement) {
+        waitForElementToBeClickable(webElement);
         driver.findElement(webElement).click();
     }
 
     public void select(By webElement, String text) {
-        Select dropdown = new Select(driver.findElement(webElement));
-        dropdown.selectByVisibleText(text);
+        waitForElementToBeClickable(webElement);
+        new Select(driver.findElement(webElement)).selectByVisibleText(text);
     }
 
     public void hoverElement(WebElement webElement) {
-        Actions action = new Actions(driver);
-        action.moveToElement(webElement).perform();
-    }
-
-    public void clickKeyboard(By webElement, Keys keyboard) {
-        driver.findElement(webElement).sendKeys(keyboard);
+        new Actions(driver).moveToElement(webElement).perform();
     }
 
     public void waitForUrlToContain(String partialUrl) {
@@ -52,12 +48,10 @@ public class Methods {
     }
 
     public void openCompanyPage() {
-        waitForElementDisplayed(Elements.companyPage);
         click(Elements.companyPage);
     }
 
     public void openCareersPage() {
-        waitForElementDisplayed(Elements.careersPage);
         click(Elements.careersPage);
     }
 
@@ -66,7 +60,6 @@ public class Methods {
     }
 
     public void openSeeAllQAJobs() {
-        waitForElementToBeClickable(Elements.seeAllQAJobsBtn);
         click(Elements.seeAllQAJobsBtn);
     }
 
@@ -78,4 +71,18 @@ public class Methods {
         waitForElementToBeClickable(Elements.filteredByQADepartment);
         select(Elements.locationSelect, location);
     }
+
+    public void sleep(Integer sec) {
+        try {
+            Thread.sleep(sec);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clickviaJS(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", element);
+    }
+
 }

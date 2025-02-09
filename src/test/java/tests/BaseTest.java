@@ -17,23 +17,24 @@ public class BaseTest {
 
     @BeforeEach
     public void setUp() {
-        String browser = "chrome";
+        String browser = System.getProperty("browser", "chrome"); // Varsayılan tarayıcı Chrome
 
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("--start-maximized");
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             FirefoxOptions options = new FirefoxOptions();
+            options.addArguments("--start-maximized");
             driver = new FirefoxDriver(options);
         } else {
-            throw new IllegalArgumentException("Geçerli bir tarayıcı parametresi seçin");
+            throw new IllegalArgumentException("Geçerli bir tarayıcı parametresi seçin: chrome veya firefox");
         }
 
-        methods = new Methods(driver); // Methods sınıfı için yeni bir örnek
+        methods = new Methods(driver);
         driver.get("https://useinsider.com/");
-        driver.manage().window().maximize();
     }
 
     @AfterEach

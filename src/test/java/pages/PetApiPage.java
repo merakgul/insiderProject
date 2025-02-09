@@ -14,22 +14,22 @@ public class PetApiPage {
         requestSpec = RestAssured.given().contentType("application/json");
     }
 
-    // Create a pet
+    // Create Pet
     public Response createPet(String petJson) {
         return requestSpec.body(petJson).post("/pet");
     }
 
-    // Get pet by ID
+    // Get Pet by ID
     public Response getPetById(int petId) {
         return requestSpec.get("/pet/" + petId);
     }
 
-    // Update pet details
+    // Update Pet
     public Response updatePet(String petJson) {
         return requestSpec.body(petJson).put("/pet");
     }
 
-    // Delete pet by ID
+    // Delete Pet by ID
     public Response deletePet(int petId) {
         return requestSpec.delete("/pet/" + petId);
     }
